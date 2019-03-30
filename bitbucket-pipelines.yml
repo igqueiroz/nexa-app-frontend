@@ -16,5 +16,5 @@ pipelines:
               variables:
                 KEY_FILE: $KEY_FILE
                 PROJECT: 'nexa-digital'
-                VERSION: 'default'
+                VERSION: 'principal'
                 PROMOTE: 'true'
