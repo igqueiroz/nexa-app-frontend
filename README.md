@@ -1,2 +1,2 @@
-# nexa-digital
+# Nexa Digital
 
