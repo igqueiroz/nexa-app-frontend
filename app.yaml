@@ -1,0 +1,15 @@
+runtime: nodejs8
+
+instance_class: F2
+service: default
+
+# [START handlers]
+handlers:
+ - url: /
+   static_files: build/index.html
+   upload: build/index.html
+
+ - url: /(.*)
+   static_files: build/\1
+   upload: build/(.*)
+# [END handlers]

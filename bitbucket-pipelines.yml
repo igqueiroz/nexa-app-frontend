@@ -1,0 +1,29 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: node:8.10.0
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Rodando testes
+          script:
+            - npm install
+            - npm run test
+      - step:
+          name: Fazendo o build
+          script:
+            - npm run-script build
+      - step:
+          caches:
+            - node
+          script:
+            - pipe: atlassian/google-app-engine-deploy:0.2.1
+              variables:
+                KEY_FILE: $KEY_FILE
+                PROJECT: 'nexa-digital'
+                VERSION: 'principal'
+                PROMOTE: 'true'
