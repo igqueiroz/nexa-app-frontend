@@ -30,7 +30,12 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "jest-cli": "^24.1.0",
-    "puppeteer": "^1.12.2"
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "puppeteer": "^1.12.2",
+    "jest": "^24.5.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-jest": "^24.5.0"
   }
 }
