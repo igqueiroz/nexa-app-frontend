@@ -9,6 +9,15 @@ pipelines:
   branches:
     master:
       - step:
+          name: Rodando testes
+          script:
+            - npm install
+            - npm run test
+      - step:
+          name: Fazendo o build
+          script:
+            - npm run-script build
+      - step:
           caches:
             - node
           script:
