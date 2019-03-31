@@ -11,12 +11,16 @@ pipelines:
       - step:
           name: Rodando a build (CI=true)
           deployment: test
+          caches:
+            - node
           script:
             - npm install
             - npm run build
       - step:
-          name: Fazendo o build
+          name: Fazendo teste
           deployment: staging
+          caches:
+            - node
           script:
             - npm test
       - step:

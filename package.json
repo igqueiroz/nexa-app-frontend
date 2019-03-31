@@ -13,11 +13,10 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "node server.js",
-    "dev": "NODE_ENV=development react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "jest",
-    "test:debug": "NODE_ENV=debug yarn run test",
+    "dev": "NODE_ENV=development react-scripts start",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -28,14 +27,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.4.0",
-    "@babel/preset-env": "^7.4.2",
-    "@babel/preset-react": "^7.0.0",
-    "puppeteer": "^1.12.2",
-    "jest": "^24.5.0",
-    "babel-core": "^7.0.0-bridge.0",
-    "babel-jest": "^24.5.0"
-  }
+  ]
 }
