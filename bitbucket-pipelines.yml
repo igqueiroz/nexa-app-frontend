@@ -10,13 +10,13 @@ pipelines:
     master:
       - step:
           name: Rodando a build (CI=true)
-          deployment: staging
+          deployment: test
           script:
             - npm install
             - npm run build
       - step:
           name: Fazendo o build
-          deployment: test
+          deployment: staging
           script:
             - npm test
       - step:
