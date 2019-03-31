@@ -29,6 +29,8 @@ pipelines:
           caches:
             - node
           script:
+            - npm install
+            - npm run build
             - pipe: atlassian/google-app-engine-deploy:0.2.1
               variables:
                 KEY_FILE: $KEY_FILE
