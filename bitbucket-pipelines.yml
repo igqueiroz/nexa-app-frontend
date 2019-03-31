@@ -9,6 +9,19 @@ pipelines:
   branches:
     master:
       - step:
+          name: Rodando a build (CI=true)
+          deployment: staging
+          script:
+            - npm install
+            - npm run build
+      - step:
+          name: Fazendo o build
+          deployment: test
+          script:
+            - npm test
+      - step:
+          name: Enviando para o App Engine Std
+          deployment: production
           caches:
             - node
           script:
