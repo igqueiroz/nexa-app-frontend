@@ -11,7 +11,7 @@ export default function Root(props) {
     return (
         <React.Fragment>
             <Header />
-    		<Route exact  path="/" component={Home} />
+    		<Route exact path="/" component={Home} />
     		<Route path="/geolocation" component={GeoLocation} />
     		<Route path="/about" component={About} />
             <Footer/>
