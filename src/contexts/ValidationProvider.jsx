@@ -6,9 +6,6 @@ const { Provider, Consumer } = ValidationContext = React.createContext()
 
 function ValidationProvider(props) {
     const [fields, setfields] = useState({})
-        
-    
-
 
     return (
         <Provider>

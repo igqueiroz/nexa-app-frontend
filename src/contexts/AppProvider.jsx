@@ -9,13 +9,13 @@ export default function AppProvider(props) {
     const { children } = props
     return (
         <LeadDataProvider>
-            <HTTPProvider>
-                <ValidationProvider>
-                    <CacheProvider>
-                            {children}
-                    </CacheProvider>
-                </ValidationProvider>
-            </HTTPProvider>                  
+           
+               
+                    
+                        {children}
+                  
+                
+                        
         </LeadDataProvider>
     );
 }

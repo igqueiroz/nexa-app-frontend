@@ -2,21 +2,29 @@ import React from 'react';
 import styled from "styled-components"
 
 export default function Footer(props) {
+
+    const YearDate = () => {
+        let dt = new Date()
+        return dt.getFullYear()
+    }
+        
     return (
         <Wrapper> 
             <BoxFirst>
                 <BoxSized>
-                    <a href="https://www.fmu.br">Portal FMU</a>
+                    <a href="/">Home</a>
                 </BoxSized>
                 <BoxSized>
-                    <a href="https://portal.fmu.br/contato/">Atendimento</a>
+                    <a href="/">Sobre nós</a>
                 </BoxSized>
                 <BoxSized>
-                    <a href="https://portal.fmu.br/editais/">Perguntas Frequentes</a>
+                    <a href="">GeoLocalização</a>
                 </BoxSized>
             </BoxFirst>
             <BoxLast>
-                <a href="tel:31323000">DÚVIDAS? LIGUE: 3132-3000</a>
+                <a href="http://www.cromosso.com.br">
+                    <YearDate/> Nexa Digital®
+                </a>
             </BoxLast>
         </Wrapper>
     );
@@ -34,7 +42,7 @@ const BoxFirst = styled.div`
 `
 const Wrapper = styled.footer`
     width: 100%;
-    background-color: #333;
+    background-color: #343a40;
     margin-top: 60px;
     padding-bottom: 30px;
     padding-top: 30px;

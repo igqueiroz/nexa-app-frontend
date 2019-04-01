@@ -1,63 +1,158 @@
 import React from 'react';
 import styled from "styled-components"
-import NexaLogo from "../images/achar-clinicas.png"
+import { Nav } from 'react-bootstrap';
 
 export default function Header(props) {
     return (
         <Wrapper>
-            <LogoHeader>
-                <a href="https://nexa-digital.appspot.com/"><NexaLogo /></a>
-            </LogoHeader>
-            <DetalheHeader>
-                <Title>
-                    Inscrição
-                </Title>
-            </DetalheHeader>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-12">
+                        <Nav className="navbar navbar-dark bg-dark">
+                            <Menu>
+                                <NavLayer />
+                                <ul>
+                                    <li><a href="#">Home</a></li>
+                                    <li><a href="#">Sobre Geolocalização</a></li>
+                                    <li><a href="#">Nexa Digital</a></li>
+                                </ul>
+                            </Menu>
+                            <NavbarBrand href="#">Nexa Digital</NavbarBrand>
+                            <NavToggle>
+                                <NavToggleSpan />
+                                <NavToggleSpan />
+                                <NavToggleSpan />
+                            </NavToggle>
+                        </Nav>
+                    </div>
+                </div>
+            </div>
         </Wrapper>
     );
 }
 
 const Wrapper = styled.header`
-    width: 100%;
-`
-
-const LogoHeader = styled.div`
-    width: 100%;
-    background-color: #d10a11;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    
-    @media (max-width:600px) {
-        padding: 15px 0;
-    }
-    @media (min-width:601px) {
-        padding: 20px 0;
-    }
-`
-const DetalheHeader = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-
-    @media (max-width:600px) {
-        height: 45px;
-    }
-    @media (min-width:601px) {
-        height: 110px;
-    }
-`
-const Title = styled.h2`
-    text-align: center;
+    background: #343a40;
     color: #fff;
-    @media (max-width:600px) {
-        font-size: 20px;
+`
+const NavbarBrand = styled.a`
+    &:link, &:hover {
+        font-size: 2rem;
+        z-index: 2;
+        color: white;
+        text-decoration: none;    
     }
-    @media (min-width:601px) {
-        font-size: 30px;
+`
+// const Nav = styled.div`
+//     position: relative;
+//     height: 100px;
+//     overflow: hidden;
+// `
+const NavToggle = styled.a`
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+    z-index: 2;
+`
+const NavToggleSpan = styled.span`
+    display: block;
+    width: 100%;
+    height: 4px;
+    border-radius: 1px;
+    background: #fff;
+    position: absolute;
+    left: 0;
+    -webkit-transition: .5s ease-in-out;
+    transition: .5s ease-in-out;
+    &:nth-child(1) {
+        top: 4px;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+    &:nth-child(2) {
+        top: 14px;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+    &:nth-child(3) {
+        top: 24px;
+        -webkit-transform-origin: left center;
+        transform-origin: left center;
+    }
+    &.open span:nth-child(1){
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 3px;
+        left: 4px;
+    }
+    &.open span:nth-child(2){
+        width: 0;
+        opacity: 0;
+    }
+    &.open span:nth-child(3){
+        -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: 25px;
+        left: 4px;
+    }
+`
+const NavLayer = styled.div`
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 50%;
+    -webkit-transition: 1s;
+    transition: 1s;
+    -webkit-transform: scale3d(0, 0, 0);
+    transform: scale3d(0, 0, 0);
+    background: -webkit-linear-gradient(to left, #22472c, #71c2ff);
+    background: linear-gradient(to left, #22472c, #71c2ff);
+    &.open {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    
+`
+
+const Menu = styled.div`
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    -webkit-transition: ease-in-out 0.25s;
+    transition: ease-in-out 0.25s;
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+    visibility: hidden;
+    opacity: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 5vh;
+    ul {
+        list-style: none;
+    }
+    &.open {
+        visibility: visible;
+        opacity: 1;
+        -webkit-transition: ease-in-out 0.5s;
+        transition: ease-in-out 0.5s;
+        -webkit-transition-delay: 0.25s;
+        transition-delay: 0.25s;
+        z-index: 2;
+    }
+    & li:hover{
+        list-style: disc;
     }
 `
