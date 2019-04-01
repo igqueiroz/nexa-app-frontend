@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Nexa Digital Template</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="description" content="Nexa Digital" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Nexa Digital" />
+	<meta property="og:description" content="Nexa Digital" />
+	<meta property="og:url" content="https://nexa-digital.appspot.com/" /> 
+	<meta property="og:site_name" content="Nexa Digital" /> 
+	<meta name="twitter:card" content="summary_large_image" /> 
+	<meta name="twitter:description" content="Nexa Digital" /> 
+	<meta name="twitter:title" content="Nexa Digital" /> 
+	<meta name="twitter:site" content="@nexadigital" /> 
+	<meta name="twitter:creator" content="@nexadigital" />
+
+	<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css" />
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.slim.min.js" ></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<script type="text/javascript"  src="https://getbootstrap.com/docs/4.0/assets/js/vendor/popper.min.js"></script>
+	<style>
+		header{
+		    background: #343a40;
+		    color: #fff;
+		}
+		body {
+			background-color: #f0f0f0;
+		}
+		.navbar-brand {
+			font-size: 2rem;
+			z-index: 2;
+		}
+		.navbar{
+		    position: relative;
+		    height: 100px;
+		    overflow: hidden;
+		}
+		.navbar .nav-toggle{
+		    width: 32px;
+		    height: 32px;
+		    cursor: pointer;
+		    -webkit-transform: rotate(0deg);
+		    transform: rotate(0deg);
+		    z-index: 2;
+		}
+		.navbar .nav-toggle span{
+		    display: block;
+		    width: 100%;
+		    height: 4px;
+		    border-radius: 1px;
+		    background: #000;
+		    position: absolute;
+		    left: 0;
+		    -webkit-transition: .5s ease-in-out;
+		    transition: .5s ease-in-out;
+		}
+		.navbar .nav-toggle span:nth-child(1){
+		    top: 4px;
+		    -webkit-transform-origin: left center;
+		    transform-origin: left center;
+		}
+		.navbar .nav-toggle span:nth-child(2){
+		    top: 14px;
+		    -webkit-transform-origin: left center;
+		    transform-origin: left center;
+		}
+		.navbar .nav-toggle span:nth-child(3){
+		    top: 24px;
+		    -webkit-transform-origin: left center;
+		    transform-origin: left center;
+		}
+		.navbar .nav-toggle.open span:nth-child(1){
+		    -webkit-transform: rotate(45deg);
+		    transform: rotate(45deg);
+		    top: 3px;
+		    left: 4px;
+		}
+		.navbar .nav-toggle.open span:nth-child(2){
+		    width: 0;
+		    opacity: 0;
+		}
+		.navbar .nav-toggle.open span:nth-child(3){
+		    -webkit-transform: rotate(-45deg);
+		    transform: rotate(-45deg);
+		    top: 25px;
+		    left: 4px;
+		}
+		.navbar .nav-layer{
+		    position: absolute;
+		    top: 16px;
+		    left: 16px;
+		    z-index: -1;
+		    background: rgba(0, 0, 0, 0.8);
+		    border-radius: 50%;
+		    -webkit-transition: 1s;
+		    transition: 1s;
+		    -webkit-transform: scale3d(0, 0, 0);
+		    transform: scale3d(0, 0, 0);
+		}
+		.navbar .nav-layer.open{
+		    -webkit-transform: scale3d(1, 1, 1);
+		    transform: scale3d(1, 1, 1);
+		}
+		.navbar .menu{
+		    width: 100%;
+		    position: fixed;
+		    left: 0;
+		    top: 0;
+		    -webkit-transition: ease-in-out 0.25s;
+		    transition: ease-in-out 0.25s;
+		    -webkit-transition-delay: 0s;
+		    transition-delay: 0s;
+		    visibility: hidden;
+		    opacity: 0;
+		}
+		.navbar .menu ul{
+		    list-style: none;
+		}
+		.navbar .menu a{
+		    color: white;
+		    text-decoration: none;
+		}
+		.navbar .menu.open{
+		    visibility: visible;
+		    opacity: 1;
+		    -webkit-transition: ease-in-out 0.5s;
+		    transition: ease-in-out 0.5s;
+		    -webkit-transition-delay: 0.25s;
+		    transition-delay: 0.25s;
+		    z-index: 2;
+		}
+		.navbar .nav-layer{
+		    background: -webkit-linear-gradient(to left, #22472c, #71c2ff);
+		    background: linear-gradient(to left, #22472c, #71c2ff);
+		}
+		.navbar .nav-toggle span{
+		    background-color: #fff;
+		}
+		.navbar .menu{
+		    display: -webkit-box;
+		    display: -ms-flexbox;
+		    display: flex;
+		    -webkit-box-align: center;
+		    -ms-flex-align: center;
+		    align-items: center;
+		    -webkit-box-pack: center;
+		    -ms-flex-pack: center;
+		    justify-content: center;
+		    color: #fff;
+
+		    font-size: 5vh;
+		}
+		.navbar .menu li:hover{
+		    list-style: disc;
+		}
+
+		#form-contato label {
+		  font: 1.1em ;
+		  color: #22472c;
+		  position: absolute;
+		  top: -6px;
+		  font-size: 70%;
+		  left: 17px;
+		  z-index: 0;
+		  cursor: text;
+		  -webkit-transition: .2s ease;
+		  transition: .2s ease;
+		  padding: 0; }
+		#form-contato input {
+		    border: 0;
+		    border-bottom: 1px solid #b2b2b2;
+		    color: #22472c;
+		    height: 40px;
+		    width: 100%;
+		    background: transparent;
+		    font-size: 1.2em;
+		    position: relative;
+		    z-index: 1;
+		    transition: .2s ease;
+		    padding-left: 9px;
+		    position: relative;
+		    opacity: 1;
+		}
+
+		#form-contato :not(output):-moz-ui-invalid {
+			box-shadow: none; }
+
+		#form-contato input:invalid {
+			box-shadow: none; }
+
+		#form-contato ul li {
+			list-style-type: none;
+			position: relative;
+			margin-top: 20px;
+			float: left;
+			width: 100%; }
+
+		#form-contato li:hover input, #form-contato form#form-contato li:hover label {
+			color: #ea5f2a;
+			border-color: #ea5f2a; }
+
+		#form-contato li input:focus {
+			color: #00c8b3;
+			border-color: #00c8b3;
+			outline: none; }
+
+		#form-contato li input:focus + label {
+			color: #ea5f2a; }
+
+		#form-contato input::-webkit-input-placeholder {
+			opacity: 0.5;
+			-webkit-transition: all .2s;
+			transition: all .2s; }
+
+		#form-contato input::-moz-placeholder {
+			opacity: 0.5;
+			-webkit-transition: all .2s;
+			transition: all .2s; }
+
+		#form-contato input:-ms-input-placeholder {
+			opacity: 0.5;
+			-webkit-transition: all .2s;
+			transition: all .2s; }
+
+		#form-contato input::placeholder {
+			opacity: 0.5;
+			-webkit-transition: all .2s;
+			transition: all .2s; }
+
+		#form-contato input:placeholder-shown:not(:focus)::-webkit-input-placeholder {
+			opacity: 0; }
+
+		#form-contato input::placeholder-shown:not(:focus)::-moz-placeholder {
+			opacity: 0; }
+
+		#form-contato input:placeholder-shown:not(:focus):-ms-input-placeholder {
+			opacity: 0; }
+
+		#form-contato input:placeholder-shown:not(:focus)::placeholder {
+			opacity: 0; }
+
+		#form-contato input:placeholder-shown:not(:focus) + * {
+			font-size: 127%;
+			top: 7px; }
+
+		#form-contato input:focus {
+			outline: none;
+			border-color: rgba(0, 0, 0, 0.5); }
+		
+
+		button {
+		  margin: 0 auto;
+		  color: #ffffff;
+		  font: 1em;
+		  border: solid 1px #ccc;
+		  border-radius: 21px;
+		  background: transparent;
+		  width: 100%;
+		  padding: 12px 0px;
+		  display: block;
+		  cursor: pointer;
+		  text-align: center;
+		  transition: .2s ease;
+		  outline: none;
+		  margin-top: 30px;
+		  transform: scale(1);
+		  margin-bottom: 20px;
+		  float: left;
+		  background: #71c2ff; }
+
+		button:hover, button.active {
+		  opacity: 0.75;
+		  border: solid 1px #22472c;
+		  color: #ffffff; }
+
+		button:focus {
+		  opacity: 0.55;
+		  /* opacidade em 30% */
+		  /*transform: scale(0.95);  escala 5% */ 
+		}
+
+		.progress {
+		  opacity: 0.7;
+		  background: #00c8b3;
+		  border: solid 1px #00c8b3;
+		  color: #ffffff;
+		  transform: scale(0.95);
+		  color: transparent !important;
+		  transition: .2s ease;
+		  border-radius: 21px;
+		  height: auto; }
+
+		@-webkit-keyframes ld {
+		  0% {
+		    transform: rotate(0deg) scale(1); }
+		  50% {
+		    transform: rotate(180deg) scale(1.1); }
+		  100% {
+		    transform: rotate(360deg) scale(1); } }
+
+		@-moz-keyframes ld {
+		  0% {
+		    transform: rotate(0deg) scale(1); }
+		  50% {
+		    transform: rotate(180deg) scale(1.1); }
+		  100% {
+		    transform: rotate(360deg) scale(1); } }
+
+		@-o-keyframes ld {
+		  0% {
+		    transform: rotate(0deg) scale(1); }
+		  50% {
+		    transform: rotate(180deg) scale(1.1); }
+		  100% {
+		    transform: rotate(360deg) scale(1); } }
+
+		@keyframes ld {
+		  0% {
+		    transform: rotate(0deg) scale(1); }
+		  50% {
+		    transform: rotate(180deg) scale(1.1); }
+		  100% {
+		    transform: rotate(360deg) scale(1); } }
+
+		.progress:before {
+		  position: relative;
+		  opacity: .8;
+		  margin-top: -16px;
+		  margin-left: -16px;
+		  width: 32px;
+		  height: 32px;
+		  content: '';
+		  display: inline-block;
+		  position: absolute;
+		  background: transparent;
+		  border: 1px solid #fff;
+		  border-top-color: transparent;
+		  border-bottom-color: transparent;
+		  border-radius: 50%;
+		  box-sizing: border-box;
+		  top: 50%;
+		  left: 50%;
+		  margin-top: -12px;
+		  margin-left: -12px;
+		  width: 24px;
+		  height: 24px;
+		  -webkit-animation: ld 1s ease-in-out infinite;
+		  -moz-animation: ld 1s ease-in-out infinite;
+		  -o-animation: ld 1s ease-in-out infinite;
+		  animation: ld 1s ease-in-out infinite; }
+
+		.progress:focus:before {
+		  position: relative;
+		  opacity: .8;
+		  margin-top: -16px;
+		  margin-left: -16px;
+		  width: 32px;
+		  height: 32px;
+		  content: '';
+		  display: inline-block;
+		  position: absolute;
+		  background: transparent;
+		  border: 1px solid #fff;
+		  border-top-color: transparent;
+		  border-bottom-color: transparent;
+		  border-radius: 50%;
+		  box-sizing: border-box;
+		  top: 50%;
+		  left: 50%;
+		  margin-top: -12px;
+		  margin-left: -12px;
+		  width: 24px;
+		  height: 24px;
+		  -webkit-animation: ld 1s ease-in-out infinite;
+		  -moz-animation: ld 1s ease-in-out infinite;
+		  -o-animation: ld 1s ease-in-out infinite;
+		  animation: ld 1s ease-in-out infinite; }
+
+		  .locate {
+		  	background: #22472c;
+		  }
+	</style>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    function resizeNav() {
+		        $(".menu").css({"height": window.innerHeight});
+		        var radius = Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2));
+		        var diameter = radius * 2;
+		        $(".nav-layer").width(diameter);
+		        $(".nav-layer").height(diameter);
+		        $(".nav-layer").css({"margin-top": -radius, "margin-left": -radius});
+		    }
+		    $(".nav-toggle").click(function() {
+		        $(".nav-toggle, .nav-layer, .menu").toggleClass("open");
+		    });
+		    $(window).resize(resizeNav);
+		    resizeNav();
+		});
+	</script>
+</head>
+<body>
+	<header>
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-md-12">
+	                <div class="navbar navbar-dark bg-dark">
+	                    <nav class="menu">
+	                        <div class="nav-layer" ></div>
+	                        <ul>
+	                            <li><a href="#">Home</a></li>
+	                            <li><a href="#">Sobre Geolocalização</a></li>
+	                            <li><a href="#">Nexa Digital</a></li>
+	                        </ul>
+	                    </nav>
+	                    <a class="navbar-brand" href="#">Nexa Digital</a>
+	                    <a class="nav-toggle">
+	                        <span></span>
+	                        <span></span>
+	                        <span></span>
+	                    </a>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</header>
+	<section class="destaques">
+        <div class="container">
+            <div class="row">
+                <div class="container">
+                	<div class="text-center"><img src="images/achar-clinicas.png" alt="Procura Clínicas" title="Procura Clínicas" /></div>
+            	</div>
+            </div>
+        	<div class="row">
+        		<div class="container mt-4">
+        			<h3 class="text-center text-center">Serviço de Localização de clínicas próximas a você:</h3>
+        		</div>
+        	</div>
+        	<div class="row">
+        		<div class="container mt-2 mb-2">
+        			<h5 class="title text-center">Digite seus dados:</h5>
+        		</div>
+        	</div>
+        	<div class="container">
+		        <form id="form-contato" class="form-group" onSubmit="">
+	            	<div class="row">
+		                <div class="col-md-6">
+		                    <input required name="name" id="name" type="text" class="input" placeholder="Nome Completo" ref="name" autoComplete="off" value="" onChange="" />
+		                        <label for="txtFullname">Nome</label>
+		                </div>
+		                <div class="col-md-6">
+		                    <input required name="email" id="email" type="text" class="input" placeholder="nome@seuprovedor" ref="email" autoComplete="off" value=""  onChange="" />
+								<label for="txtEmail">E-mail</label>
+		                </div>
+	            	</div>
+		            <div class="row mt-5">
+		            	<div class="col-md-12">
+		            		<h5 class="title text-center">Ache clínicas diagnósticas próximas num raio de:</h5>
+		            	</div>
+		        	</div>
+
+		        	<div class="row">
+			            <div class="col-md-4 extras text-center">
+			                <button class="nearbymeters"> 1km </button>
+			            </div>
+			            <div class="col-md-4 extras text-center">
+			                <button class="nearbymeters"> 2km </button>
+			            </div>
+			            <div class="col-md-4 extras text-center">
+			                <button class="nearbymeters"> 3km </button>
+			            </div>
+			        </div>
+			        <div class="row">
+		           		<button class="locate" type="Submit">Eu quero achar universidades!</button>
+		           	</div>
+		        </form>
+	        </div>
+            <div id="map">
+            </div> 
+        </div>
+    </section>  
+
+</body>
+</html>

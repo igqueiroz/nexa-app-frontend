@@ -17,17 +17,13 @@ pipelines:
             - npm install
             - npm run build
       - step:
-          name: Fazendo teste
+          name: Fazendo testes
           deployment: staging
-          caches:
-            - node
           script:
             - npm test
       - step:
           name: Enviando para o App Engine Std
           deployment: production
-          caches:
-            - node
           script:
             - npm install
             - npm run build
