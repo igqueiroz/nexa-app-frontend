@@ -114,13 +114,14 @@ const NavLayer = styled.div`
     z-index: -1;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
-    -webkit-transition: 1s;
-    transition: 1s;
+    -webkit-transition: 2s;
+    transition: 2s;
     -webkit-transform: scale3d(0, 0, 0);
     transform: scale3d(0, 0, 0);
     background: -webkit-linear-gradient(to left, #22472c, #71c2ff);
     background: linear-gradient(to left, #22472c, #71c2ff);
     &.open {
+        transition: 2s;
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
         width: ${props => props.resizeNav.diameter}px;
@@ -147,8 +148,8 @@ const Menu = styled.div`
     transition: ease-in-out 0.25s;
     -webkit-transition-delay: 0s;
     transition-delay: 0s;
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -163,6 +164,7 @@ const Menu = styled.div`
     ul {
         list-style: none;
     }
+    height: ${props => window.innerHeight}px;
     &.open {
         visibility: visible;
         opacity: 1;
@@ -171,7 +173,6 @@ const Menu = styled.div`
         -webkit-transition-delay: 0.25s;
         transition-delay: 0.25s;
         z-index: 2;
-        height: ${props => window.innerHeight}px;
     }
     & li:hover{
         list-style: disc;
