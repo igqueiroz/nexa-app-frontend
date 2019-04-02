@@ -50,7 +50,7 @@ export default function Home (props) {
 				        	<div className="container">
 						        <form id="form-contato" className="form-group">
 					            	<div className="row">
-						                <div className="col-md-6">
+						                <div className="col-md-6 mt-4">
 						                    <Input 
 						                    required 
 						                    name="name" 
@@ -64,7 +64,7 @@ export default function Home (props) {
                         					onChange={ event => handleChange(event) } />
 						                    <Label htmlFor="txtFullname">Nome</Label>
 						                </div>
-						                <div className="col-md-6">
+						                <div className="col-md-6 mt-4">
 						                    <Input 
 						                    	required 
 						                    	name="email" 

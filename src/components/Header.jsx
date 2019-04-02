@@ -5,32 +5,17 @@ import { Nav } from 'react-bootstrap';
 export default function Header(props) {
     const [openMenu, setOpenMenu] = useState(false)
     const changeOpenMenu = (value) => {
-
         setOpenMenu(value)
     }
-
-    function resizeNav() {
-    // jQuery(".menu").css({"height": window.innerHeight});
-    // var radius = Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2));
-    // var diameter = radius * 2;
-    // $(".nav-layer").width(diameter);
-    // $(".nav-layer").height(diameter);
-    // $(".nav-layer").css({"margin-top": -radius, "margin-left": -radius});
-
-    // $(".nav-toggle").click(function() {
-    //  $(".nav-toggle, .nav-layer, .menu").toggleclassName("open");
-    // });
-    // $(window).resize(resizeNav);
-    // resizeNav();
-    }
+    
     return (
         <Wrapper>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
                         <Nav className="navbar navbar-dark bg-dark">
-                            <Menu>
-                                <NavLayer />
+                            <Menu resizeNav={resizeNav} className={`${(openMenu) ? "open" : ""}`}>
+                                <NavLayer className={`${(openMenu) ? "open" : ""}`} />
                                 <ul>
                                     <li><a href="/">Home</a></li>
                                     <li><a href="/geolocation">Sobre Geolocalização</a></li>
@@ -40,7 +25,6 @@ export default function Header(props) {
                             <NavbarBrand href="/">Nexa Digital</NavbarBrand>
                             <NavToggle 
                                 onClick={ event => {
-                                    console.log(openMenu);
                                     changeOpenMenu(true);
                                     if(openMenu) {changeOpenMenu(false)}
                                     }
@@ -139,9 +123,20 @@ const NavLayer = styled.div`
     &.open {
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
+        width: ${props => props.resizeNav.diameter}px;
+        height:  ${props => props.resizeNav.diameter}px;
+        margin-top: -${props => props.resizeNav.radius}px;
+        margin-left: -${props => props.resizeNav.radius}px;
     }
-    
 `
+let radius = Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2));
+const resizeNav = {
+    radius: radius,
+    diameter: radius * 2
+};
+NavLayer.defaultProps = {
+    resizeNav
+}
 
 const Menu = styled.div`
     width: 100%;
@@ -176,8 +171,16 @@ const Menu = styled.div`
         -webkit-transition-delay: 0.25s;
         transition-delay: 0.25s;
         z-index: 2;
+        height: ${props => window.innerHeight}px;
     }
     & li:hover{
         list-style: disc;
+    }
+    & li a:visited,
+    & li a:link {
+        color: #fff;
+    }
+    & li:hover a {
+        text-decoration: none;
     }
 `
