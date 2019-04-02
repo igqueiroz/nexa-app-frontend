@@ -168,7 +168,7 @@ export class IncludeMap extends Component {
       }
     }
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyC8AqZGEDQvRcNCofun-o3YSJXU6V9G9LE",
+    apiKey: "AIzaSyAmFYEUy9Kj2WhpImGyYHMb0t9efz3Vmbk",
     version: '3',
     language: 'portuguese'
 })(IncludeMap)

@@ -1,8 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components"
 import { Nav } from 'react-bootstrap';
 
 export default function Header(props) {
+    const [openMenu, setOpenMenu] = useState(false)
+    const changeOpenMenu = (value) => {
+
+        setOpenMenu(value)
+    }
+
+    function resizeNav() {
+    // jQuery(".menu").css({"height": window.innerHeight});
+    // var radius = Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2));
+    // var diameter = radius * 2;
+    // $(".nav-layer").width(diameter);
+    // $(".nav-layer").height(diameter);
+    // $(".nav-layer").css({"margin-top": -radius, "margin-left": -radius});
+
+    // $(".nav-toggle").click(function() {
+    //  $(".nav-toggle, .nav-layer, .menu").toggleclassName("open");
+    // });
+    // $(window).resize(resizeNav);
+    // resizeNav();
+    }
     return (
         <Wrapper>
             <div className="container">
@@ -12,13 +32,21 @@ export default function Header(props) {
                             <Menu>
                                 <NavLayer />
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">Sobre Geolocalização</a></li>
-                                    <li><a href="#">Nexa Digital</a></li>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/geolocation">Sobre Geolocalização</a></li>
+                                    <li><a href="/about">Nexa Digital</a></li>
                                 </ul>
                             </Menu>
-                            <NavbarBrand href="#">Nexa Digital</NavbarBrand>
-                            <NavToggle>
+                            <NavbarBrand href="/">Nexa Digital</NavbarBrand>
+                            <NavToggle 
+                                onClick={ event => {
+                                    console.log(openMenu);
+                                    changeOpenMenu(true);
+                                    if(openMenu) {changeOpenMenu(false)}
+                                    }
+                                }
+                                className={`${(openMenu) ? "open" : ""}`}
+                            >
                                 <NavToggleSpan />
                                 <NavToggleSpan />
                                 <NavToggleSpan />
@@ -36,18 +64,14 @@ const Wrapper = styled.header`
     color: #fff;
 `
 const NavbarBrand = styled.a`
-    &:link, &:hover {
+    &:link, &:hover, &:visited {
         font-size: 2rem;
         z-index: 2;
         color: white;
         text-decoration: none;    
     }
 `
-// const Nav = styled.div`
-//     position: relative;
-//     height: 100px;
-//     overflow: hidden;
-// `
+
 const NavToggle = styled.a`
     width: 32px;
     height: 32px;
@@ -55,6 +79,22 @@ const NavToggle = styled.a`
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
     z-index: 2;
+    &.open span:nth-child(1){
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 3px;
+        left: 4px;
+    }
+    &.open span:nth-child(2){
+        width: 0;
+        opacity: 0;
+    }
+    &.open span:nth-child(3){
+       -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: 25px;
+        left: 4px;
+    }
 `
 const NavToggleSpan = styled.span`
     display: block;
@@ -81,22 +121,7 @@ const NavToggleSpan = styled.span`
         -webkit-transform-origin: left center;
         transform-origin: left center;
     }
-    &.open span:nth-child(1){
-        -webkit-transform: rotate(45deg);
-        transform: rotate(45deg);
-        top: 3px;
-        left: 4px;
-    }
-    &.open span:nth-child(2){
-        width: 0;
-        opacity: 0;
-    }
-    &.open span:nth-child(3){
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-        top: 25px;
-        left: 4px;
-    }
+    
 `
 const NavLayer = styled.div`
     position: absolute;

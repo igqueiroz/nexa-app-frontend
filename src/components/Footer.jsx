@@ -15,14 +15,14 @@ export default function Footer(props) {
                     <a href="/">Home</a>
                 </BoxSized>
                 <BoxSized>
-                    <a href="/">Sobre nós</a>
+                    <a href="/about">Sobre nós</a>
                 </BoxSized>
                 <BoxSized>
-                    <a href="">GeoLocalização</a>
+                    <a href="/geolocation">GeoLocalização</a>
                 </BoxSized>
             </BoxFirst>
             <BoxLast>
-                <a href="http://www.cromosso.com.br">
+                <a href="/">
                     <YearDate/> Nexa Digital®
                 </a>
             </BoxLast>
