@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import PropTypes from 'prop-types';
+import React, {useState, useEffect} from 'react'
+import PropTypes from 'prop-types'
 import styled from "styled-components"
 import IncludeMap from "./IncludeMap"
 
@@ -10,22 +10,51 @@ const propTypes = {
     label: PropTypes.string
 };
 
-
-const defaultProps = {};
-
 export default function Home (props) {
 	const inputRef = React.createRef()
-
-	const [isFocused, setFocus] = useState(false)
 	const [loadButton, setLoadButton] = useState(false)
 	const [showMap, setShowMap] = useState(false)
+	const [fakeLoad, setFakeLoad] = useState(false)
+	const [nearByParam, setNearByParam] = useState(nearByParamInitial)
+	const [validateSubmit, setValidateSubmit] = useState(false)
+
+	const nearByParamInitial = {
+		zoom: 0,
+		km: 0,
+		submit: false
+	}
+
+	const changeFakeLoad = (value) => {
+		setFakeLoad(value)
+		setTimeout(() => {
+            setFakeLoad(false) 
+        }, 250);
+	}
+	const changeLoadButton = (value) => setLoadButton(value)
+	const changeShowMap = (value) => setShowMap(value)
+	
+	// const validSubmit(state)  {
+	// 	console.log(validateSubmit)
+	// }
 
 	function handleChange(event)  {
 	    const {name, value} = event.target
 	    // updateLeadData({ name, value })
 	    // hasValidation && validateField({ name, value })
 	}
-	const changeLoadButton = (value) => setLoadButton(value)
+	function handleSubmit(event) {
+		event.preventDefault()
+
+	}
+	const changeNearByParam = (params) => {
+		console.log(params.km, params.zoom, params.submit)
+		let newParams = {}
+		newParams.zoom = params.zoom
+		newParams.km = params.km
+		newParams.submit = true
+		setNearByParam(newParams)
+	}
+
     return (
         <div className="container">
             <div className="row">
@@ -48,20 +77,27 @@ export default function Home (props) {
 				        		</div>
 				        	</div>
 				        	<div className="container">
-						        <form id="form-contato" className="form-group">
+						        <form 
+						        	id="form-contato"
+						        	className="form-group"
+						        	onSubmit={event => {
+								    	event.preventDefault();
+								    	console.log('valid!!')
+								    }}
+						        >
 					            	<div className="row">
 						                <div className="col-md-6 mt-4">
 						                    <Input 
-						                    required 
-						                    name="name" 
-						                    id="name" 
-						                    type="text" 
-						                    className="input" 
-						                    placeholder="Nome Completo" 
-						                    forwardRef="name" 
-						                    autoComplete="off"
-						                    onFocus={ _ => setFocus(true) }
-                        					onChange={ event => handleChange(event) } />
+							                    required 
+							                    name="name" 
+							                    id="name" 
+							                    type="text" 
+							                    className="input" 
+							                    placeholder="Nome Completo" 
+							                    forwardRef="name" 
+							                    autoComplete="off"
+	                        					onChange={ event => handleChange(event) } 
+	                        				/>
 						                    <Label htmlFor="txtFullname">Nome</Label>
 						                </div>
 						                <div className="col-md-6 mt-4">
@@ -81,25 +117,74 @@ export default function Home (props) {
 					            	</div>
 						            <div className="row mt-5">
 						            	<div className="col-md-12">
-						            		<h5 className="title text-center">Ache clínicas diagnósticas próximas num raio de:</h5>
+						            		<h5 className="title text-center">
+						            			Ache clínicas diagnósticas próximas num raio de:
+						            		</h5>
 						            	</div>
 						        	</div>
 
 						        	<div className="row">
 							            <div className="col-md-4 extras text-center">
-							                <Button className="nearbymeters"> 1km </Button>
+							                <Button 
+							                	className={`nearbymeters ${(fakeLoad) ? "progress" : ""}`}
+							                	onClick={ event => {
+							                		event.preventDefault()
+							                		changeFakeLoad(true)
+							                		changeNearByParam(
+							                			{
+							                				zoom: 14,
+							                				km: 1000
+
+							                			}
+							                		)
+							                		}
+							                	}
+							                >
+							                	1km
+							                </Button>
 							            </div>
 							            <div className="col-md-4 extras text-center">
-							                <Button className="nearbymeters"> 2km </Button>
+							                <Button
+							                	className={`nearbymeters ${(fakeLoad) ? "progress" : ""}`}
+							                	onClick={ event => {
+							                		event.preventDefault()
+							                		changeFakeLoad(true)
+							                		changeNearByParam(
+							                			{
+							                				zoom: 13.5,
+							                				km: 2000
+
+							                			}
+							                		)
+							                		}
+							                	}
+							                >
+							                	2km
+							                </Button>
 							            </div>
 							            <div className="col-md-4 extras text-center">
-							                <Button className="nearbymeters"> 3km </Button>
+							                <Button 
+							                	className={`nearbymeters ${(fakeLoad) ? "progress" : ""}`}
+							                	onClick={ event => {
+							                		event.preventDefault()
+							                		changeFakeLoad(true)
+							                		changeNearByParam(
+							                			{
+							                				zoom: 13,
+							                				km: 3000
+
+							                			}
+							                		)
+							                		}
+							                	}
+							                >
+							                	3km
+							                </Button>
 							            </div>
 							        </div>
 							        <div className="row">
-						           		<Button
-						           			onClick={event => {
-					                            event.preventDefault()
+						           		{ nearByParam && <Button
+						           			onClick={ event => {
 					                            changeLoadButton(true)
 					                        	}
 					                        }
@@ -107,13 +192,14 @@ export default function Home (props) {
 						           			type="Submit"
 						           		>
 						           			Quero achar clínicas próximas a mim
-						           		</Button>
+						           		</Button> 
+						           		}
 						           	</div>
 						        </form>
 					        </div>
 				            <Map>
 					            {
-					            	// this.state.submit && 
+					            	validateSubmit && 
 					            	<IncludeMap
 	                                // store={this.props.routes[0].store}
 	                                // myLocation={this.state.myLocation}
@@ -135,7 +221,7 @@ export default function Home (props) {
 const Map = styled.div`
 	position: relative;
     width: 100%;
-    height: 550px;
+    height: auto;
     clear: both;
     margin-top: 30px;
     float: left;
@@ -246,9 +332,11 @@ const Button = styled.button`
 		opacity: 0.75;
 		border: solid 1px #22472c;
 		color: #fff;
+		outline: none;
 	}
 	&:focus {
 		opacity: 0.55;
+		outline: none;
 	}
 
 	&.progress {
