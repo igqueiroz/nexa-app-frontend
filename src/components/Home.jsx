@@ -1,29 +1,29 @@
-import React, {useState, useEffect} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState, useContext} from 'react'
 import styled from "styled-components"
 import IncludeMap from "./IncludeMap"
-
-const propTypes = {
-    /** Placeholder para o input */
-    placeholder: PropTypes.string,
-    /** Label que acompanha a tag input */
-    label: PropTypes.string
-};
+import { ValidationContext } from "../contexts/ValidationProvider"
+import { LeadDataContext } from "../contexts/LeadDataProvider"
+import { Modal } from 'react-bootstrap'
 
 export default function Home (props) {
-	const inputRef = React.createRef()
-	const [loadButton, setLoadButton] = useState(false)
-	const [showMap, setShowMap] = useState(false)
-	const [fakeLoad, setFakeLoad] = useState(false)
-	const [nearByParam, setNearByParam] = useState(nearByParamInitial)
-	const [validateSubmit, setValidateSubmit] = useState(false)
-
 	const nearByParamInitial = {
 		zoom: 0,
 		km: 0,
 		submit: false
 	}
-
+	const modalBoxInitial = {
+		show: false,
+		titulo: '',
+		mensagem: ''
+	}
+	const [loadButton, setLoadButton] = useState(false)
+	const [showMap, setShowMap] = useState(false)
+	const [fakeLoad, setFakeLoad] = useState(false)
+	const [nearByParam, setNearByParam] = useState(nearByParamInitial)
+	const [modalBox, setModalShow] = useState(modalBoxInitial)
+	const {leadData, updateLeadData} = useContext(LeadDataContext)
+	const {validateField, fields} = useContext(ValidationContext)
+	
 	const changeFakeLoad = (value) => {
 		setFakeLoad(value)
 		setTimeout(() => {
@@ -33,26 +33,45 @@ export default function Home (props) {
 	const changeLoadButton = (value) => setLoadButton(value)
 	const changeShowMap = (value) => setShowMap(value)
 	
-	// const validSubmit(state)  {
-	// 	console.log(validateSubmit)
-	// }
-
 	function handleChange(event)  {
 	    const {name, value} = event.target
-	    // updateLeadData({ name, value })
-	    // hasValidation && validateField({ name, value })
+	    validateField({ name, value })	
 	}
-	function handleSubmit(event) {
-		event.preventDefault()
 
+	function handleSubmit(event) {
+		changeLoadButton(true);
+		// Valida todos os campos
+		if (Object.values(fields).filter(e => e.hasError === false).length === Object.values(fields).length) {
+			changeShowMap(true);
+			setTimeout(() => { changeLoadButton(false); }, 650);
+			// updateLeadData({ name, value })
+		} else {
+			let mensagem = [];
+			Object.values(fields).filter(e => mensagem.push(e.errorMessage))
+			setModalShow({
+				show: true,
+				titulo: 'Oooopppsss... ',
+				mensagem: mensagem
+			})
+			setTimeout(() => { changeLoadButton(false); }, 650);
+		}
 	}
+
 	const changeNearByParam = (params) => {
-		console.log(params.km, params.zoom, params.submit)
 		let newParams = {}
 		newParams.zoom = params.zoom
 		newParams.km = params.km
 		newParams.submit = true
 		setNearByParam(newParams)
+	}
+
+	function ErrorsList(props) {
+		const listItems = props.mensagem.map((mensagem, index) => {
+			if (mensagem) {
+				return <li key={index.toString()}> {mensagem} </li>	
+			}
+		})
+		return (<ul>{listItems}</ul>)
 	}
 
     return (
@@ -82,19 +101,20 @@ export default function Home (props) {
 						        	className="form-group"
 						        	onSubmit={event => {
 								    	event.preventDefault();
-								    	console.log('valid!!')
+								    	handleSubmit();
 								    }}
 						        >
 					            	<div className="row">
 						                <div className="col-md-6 mt-4">
 						                    <Input 
 							                    required 
-							                    name="name" 
-							                    id="name" 
+							                    name="Nome"
+							                    id="Nome"
 							                    type="text" 
+												value={leadData['name']}
 							                    className="input" 
 							                    placeholder="Nome Completo" 
-							                    forwardRef="name" 
+							                    forwardRef="Nome" 
 							                    autoComplete="off"
 	                        					onChange={ event => handleChange(event) } 
 	                        				/>
@@ -103,12 +123,13 @@ export default function Home (props) {
 						                <div className="col-md-6 mt-4">
 						                    <Input 
 						                    	required 
-						                    	name="email" 
-						                    	id="email" 
+						                    	name="Email"
+						                    	id="Email"
 						                    	type="text" 
+						                    	value={leadData['name']}
 						                    	className="input" 
 						                    	placeholder="nome@seuprovedor" 
-						                    	forwardRef="email" 
+						                    	forwardRef="Email" 
 						                    	autoComplete="off" 
 						                    	onChange={ event => handleChange(event) } 
 						                    />
@@ -134,7 +155,6 @@ export default function Home (props) {
 							                			{
 							                				zoom: 14,
 							                				km: 1000
-
 							                			}
 							                		)
 							                		}
@@ -153,7 +173,6 @@ export default function Home (props) {
 							                			{
 							                				zoom: 13.5,
 							                				km: 2000
-
 							                			}
 							                		)
 							                		}
@@ -172,7 +191,6 @@ export default function Home (props) {
 							                			{
 							                				zoom: 13,
 							                				km: 3000
-
 							                			}
 							                		)
 							                		}
@@ -183,11 +201,7 @@ export default function Home (props) {
 							            </div>
 							        </div>
 							        <div className="row">
-						           		{ nearByParam && <Button
-						           			onClick={ event => {
-					                            changeLoadButton(true)
-					                        	}
-					                        }
+						           		{ nearByParam.submit && <Button
 						           			className={`locate ${(loadButton) ? "progress" : ""}`}
 						           			type="Submit"
 						           		>
@@ -197,23 +211,44 @@ export default function Home (props) {
 						           	</div>
 						        </form>
 					        </div>
-				            <Map>
-					            {
-					            	validateSubmit && 
-					            	<IncludeMap
-	                                // store={this.props.routes[0].store}
+				             {
+				             	showMap && <Map showMap={showMap} >
+					           	<IncludeMap
 	                                // myLocation={this.state.myLocation}
 	                                // zoom={this.state.zoom}
 	                                // nearByDistance={this.state.nearByDistance}
 	                                // name={this.state.name}
 	                                // email={this.state.email}
 	                                // userDevice={this.state.userDevice}
-	                             />}
+	                             />
 				            </Map> 
+				            }
 				        </div>
 				    </section>
                 </div>
             </div>
+			<Modal
+				show={modalBox.show}
+				size="lg"
+	        	aria-labelledby="contained-modal-title-vcenter"
+	        	centered
+	        	onHide={event => { setModalShow(false) }} 
+        	>
+				<Modal.Header closeButton>
+					<Modal.Title>{modalBox.titulo}</Modal.Title>
+				</Modal.Header>
+
+				<Modal.Body>
+					{ modalBox.show && <ErrorsList mensagem={modalBox.mensagem}/> }
+				</Modal.Body>
+
+				<Modal.Footer>
+					<Button 
+						variant="secondary"
+						onClick={event => { setModalShow(false) }} >Fechar
+					</Button>
+				</Modal.Footer>
+			</Modal>
         </div>
     );
 }
@@ -221,7 +256,7 @@ export default function Home (props) {
 const Map = styled.div`
 	position: relative;
     width: 100%;
-    height: auto;
+    height: ${props => (props.showMap) ? "550" : "0" }px; 
     clear: both;
     margin-top: 30px;
     float: left;

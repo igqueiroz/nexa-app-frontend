@@ -1,7 +1,6 @@
-import React from 'react';
-import styled from "styled-components"
+import React from 'react'
 
-export default function GeoLocation(props) {
+export default function GeoLocation() {
     return (
         <div className="container mt-5">
             <div className="row">
