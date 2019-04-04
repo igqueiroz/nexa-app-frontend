@@ -20,7 +20,7 @@ pipelines:
           name: Fazendo testes
           deployment: staging
           script:
-            - npm test
+            - npm run test
       - step:
           name: Enviando para o App Engine Std
           deployment: production
