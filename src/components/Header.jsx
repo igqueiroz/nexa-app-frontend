@@ -161,9 +161,16 @@ const Menu = styled.div`
     justify-content: center;
     color: #fff;
     font-size: 5vh;
+
+    @media (max-width:600px) {
+        font-size: 4vh;
+    }
+
     ul {
         list-style: none;
     }
+
+        
     height: ${props => window.innerHeight}px;
     &.open {
         visibility: visible;
