@@ -16,16 +16,16 @@ export default function Home (props) {
 		titulo: '',
 		mensagem: ''
 	}
+
 	const [loadButton, setLoadButton] = useState(false)
 	const [showMap, setShowMap] = useState(false)
 	const [fakeLoad, setFakeLoad] = useState(false)
 	const [nearByParam, setNearByParam] = useState(nearByParamInitial)
 	const [modalBox, setModalShow] = useState(modalBoxInitial)
 	const [mylocation, setMyLocation] = useState({})
-	const [geolocationEnable, setGeolocationEnable] = useState(false)
 	const {leadData, updateLeadData} = useContext(LeadDataContext)
 	const {validateField, fields} = useContext(ValidationContext)
-	
+
 	const changeFakeLoad = (value) => {
 		setFakeLoad(value)
 		setTimeout(() => {
@@ -35,29 +35,15 @@ export default function Home (props) {
 	const changeLoadButton = (value) => setLoadButton(value)
 	const changeShowMap = (value) => setShowMap(value)
 	const changeMyLocation = (value) => setMyLocation(value)
-
+	
+	
+	
 	function handleChange(event)  {
 	    const {name, value} = event.target
-	    validateField({ name, value })	
+	    validateField({ name, value })
+	    updateLeadData({ name, value })
 	}
 
-	function handleSubmit(event) {
-		changeLoadButton(true)
-		// Valida todos os campos
-		if (Object.values(fields).filter(e => e.hasError === false).length === Object.values(fields).length) {
-			setTimeout(() => { changeLoadButton(false); }, 650);
-			enableGeoLocation()
-		} else {
-			let mensagem = [];
-			Object.values(fields).filter(e => mensagem.push(e.errorMessage))
-			setModalShow({
-				show: true,
-				titulo: 'Oooopppsss... ',
-				mensagem: mensagem
-			})
-			setTimeout(() => { changeLoadButton(false); }, 650);
-		}
-	}
 
 	const changeNearByParam = (params) => {
 		let newParams = {}
@@ -68,12 +54,12 @@ export default function Home (props) {
 	}
 
 	function ErrorsList(props) {
-		const listItems = props.mensagem.map(( mensagem, index ) => {
-			if (mensagem) {
-				return <li key={index.toString()}> {mensagem} </li>	
-			}
-		})
-		return (<ul>{listItems}</ul>)
+		if (props.mensagem) {
+			const listItems = props.mensagem.map(( mensagem, index ) => {
+					return <li key={index.toString()}> {mensagem} </li>					
+			})
+			return (<ul>{listItems}</ul>)
+		}
 	}
 	
 	function enableGeoLocation() {
@@ -91,19 +77,42 @@ export default function Home (props) {
         }
 	}
 
-	function sendMyLocation(position){
-		changeMyLocation({
-			mylocation: [position.coords.latitude, position.coords.longitude]
-		})
-		verifyGeoLocation()
+	function handleSubmit(event) {
+
+		changeLoadButton(true)
+		// Valida todos os campos
+		if (Object.values(fields).filter(e => e.hasError === false).length === Object.values(fields).length) {
+			setTimeout(() => { changeLoadButton(false); }, 650);
+			enableGeoLocation()
+		} else {
+			let mensagem = [];
+			Object.values(fields).filter(e => mensagem.push(e.errorMessage))
+			setModalShow({
+				show: true,
+				titulo: 'Oooopppsss... ',
+				mensagem: mensagem
+			})
+			setTimeout(() => { changeLoadButton(false); }, 650);
+		}
 	}
 
+	function sendMyLocation(position){
+		if (position) {
+			changeMyLocation({
+				mylocation: [position.coords.latitude, position.coords.longitude]
+			})
+			verifyGeoLocation()	
+		}
+	}
+
+	useEffect(() => {
+		sendMyLocation()
+	})
+
 	function verifyGeoLocation() {
-		console.log(mylocation)
 		if (mylocation.mylocation) {
 			changeShowMap(true)
-			setGeolocationEnable(true)
-			// updateLeadData({ name, value })
+			document.querySelector('#googlemaps').scrollIntoView({ behavior: 'smooth' });
 		} else {
 			setModalShow({
 				show: true,
@@ -192,7 +201,7 @@ export default function Home (props) {
 							                		changeFakeLoad(true)
 							                		changeNearByParam(
 							                			{
-							                				zoom: 14,
+							                				zoom: 15,
 							                				km: 1000
 							                			}
 							                		)
@@ -210,7 +219,7 @@ export default function Home (props) {
 							                		changeFakeLoad(true)
 							                		changeNearByParam(
 							                			{
-							                				zoom: 13.5,
+							                				zoom: 14,
 							                				km: 2000
 							                			}
 							                		)
@@ -251,14 +260,14 @@ export default function Home (props) {
 						        </form>
 					        </div>
 				             {
-				             	showMap && geolocationEnable && <Map showMap={showMap} >
+				             	showMap && <Map id="googlemaps" showMap={showMap} >
 					           	<IncludeMap
-	                                myLocation={mylocation}
+	                                myLocation={mylocation.mylocation}
 	                                zoom={nearByParam.zoom}
 	                                nearByDistance={nearByParam.km}
-	                                // name={this.state.name}
-	                                // email={this.state.email}
-	                                // userDevice={this.state.userDevice}
+	                                name={fields.Nome}
+	                                email={fields.Email}
+	                                leadData={leadData}
 	                             />
 				            </Map> 
 				            }

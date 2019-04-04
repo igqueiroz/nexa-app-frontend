@@ -21,11 +21,6 @@ function ValidationProvider(props) {
 
     
     function getFieldsForValidation() {
-        const initialValidationState = {
-            hasError: false,
-            errorMsg: "",
-            renderErrorMsg: false
-        }
        	return fields 
     }
 
@@ -53,6 +48,11 @@ function ValidationProvider(props) {
         <Provider 
             value={{
                 validateField,
+                toggleRenderErrorMsg,
+                shouldRenderErrorMsg,
+                getValidationStatus,
+                getErrorMsg,
+                leadHasData,
                 fields
             }}
         >

@@ -25,9 +25,7 @@ router.post('/userlist', (req, res) => {
 	const userLocationLat = req.body.newUserLocationLat;
 	const userLocationLng = req.body.newUserLocationLng;
 	const userDevice = req.body.newUserDevice;
-	const userRange = req.body.newRange;
-	const universityLat = req.body.newUniversityLat;
-	const universityLng = req.body.newuniversityLng;
+	const userPlace = req.body.newPlace
 	
 	// Quando tiver validação de dados no lado do servidor, colocar nesse espaço
 	// Insere os dados coletados via POST vindos da App no nosso banco 
@@ -37,10 +35,8 @@ router.post('/userlist', (req, res) => {
 		'userLocationLat': userLocationLat,
 		'userLocationLng': userLocationLng,
 		'userDevice': userDevice,
-		'userRange': userRange,
-		'universityLat': universityLat,
-		'universityLng': universityLng
+		'userPlace': userPlace,
 	})
 });
-   
+
 module.exports = router;
