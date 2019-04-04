@@ -253,9 +253,9 @@ export default function Home (props) {
 				             {
 				             	showMap && geolocationEnable && <Map showMap={showMap} >
 					           	<IncludeMap
-	                                // myLocation={this.state.myLocation}
-	                                // zoom={this.state.zoom}
-	                                // nearByDistance={this.state.nearByDistance}
+	                                myLocation={mylocation}
+	                                zoom={nearByParam.zoom}
+	                                nearByDistance={nearByParam.km}
 	                                // name={this.state.name}
 	                                // email={this.state.email}
 	                                // userDevice={this.state.userDevice}
