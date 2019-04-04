@@ -1,0 +1,72 @@
+#!/usr/bin/env node
+// Arquivo do Express que cria as portas e prepara o servidor para requisições HTTP
+
+// Dependências do modulo
+var app = require('../app');
+var debug = require('debug')('server:server');
+var http = require('http');
+
+
+// Monta uma porta do ambiente e guarda no Express
+var port = normalizePort(process.env.PORT || '3001');
+app.set('port', port);
+
+// Cria um servidor HTTP
+var server = http.createServer(app);
+
+// Escuta a porta registrada, em todas as interfaces da rede
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+// Normaliza a porta em um número, string, ou false.
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // Pipe nomeado
+    return val;
+  }
+
+  if (port >= 0) {
+    // Número da porta
+    return port;
+  }
+
+  return false;
+}
+
+
+// Evento para servidor HTTP retornar "error"
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // Faz erros serem visíveis no console.error do browser com mensagens
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+// Evento para o servidor HTTP receber eventos
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}

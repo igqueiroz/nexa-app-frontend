@@ -1,24 +1,36 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from "styled-components"
 import { Nav } from 'react-bootstrap';
 
 export default function Header(props) {
+    const [openMenu, setOpenMenu] = useState(false)
+    const changeOpenMenu = (value) => {
+        setOpenMenu(value)
+    }
+    
     return (
         <Wrapper>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
                         <Nav className="navbar navbar-dark bg-dark">
-                            <Menu>
-                                <NavLayer />
+                            <Menu resizeNav={resizeNav} className={`${(openMenu) ? "open" : ""}`}>
+                                <NavLayer className={`${(openMenu) ? "open" : ""}`} />
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">Sobre Geolocalização</a></li>
-                                    <li><a href="#">Nexa Digital</a></li>
+                                    <li><a href="/">Home</a></li>
+                                    <li><a href="/geolocation">Sobre Geolocalização</a></li>
+                                    <li><a href="/about">Nexa Digital</a></li>
                                 </ul>
                             </Menu>
-                            <NavbarBrand href="#">Nexa Digital</NavbarBrand>
-                            <NavToggle>
+                            <NavbarBrand href="/">Nexa Digital</NavbarBrand>
+                            <NavToggle 
+                                onClick={ event => {
+                                    changeOpenMenu(true);
+                                    if(openMenu) {changeOpenMenu(false)}
+                                    }
+                                }
+                                className={`${(openMenu) ? "open" : ""}`}
+                            >
                                 <NavToggleSpan />
                                 <NavToggleSpan />
                                 <NavToggleSpan />
@@ -36,18 +48,14 @@ const Wrapper = styled.header`
     color: #fff;
 `
 const NavbarBrand = styled.a`
-    &:link, &:hover {
+    &:link, &:hover, &:visited {
         font-size: 2rem;
         z-index: 2;
         color: white;
         text-decoration: none;    
     }
 `
-// const Nav = styled.div`
-//     position: relative;
-//     height: 100px;
-//     overflow: hidden;
-// `
+
 const NavToggle = styled.a`
     width: 32px;
     height: 32px;
@@ -55,6 +63,22 @@ const NavToggle = styled.a`
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
     z-index: 2;
+    &.open span:nth-child(1){
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        top: 3px;
+        left: 4px;
+    }
+    &.open span:nth-child(2){
+        width: 0;
+        opacity: 0;
+    }
+    &.open span:nth-child(3){
+       -webkit-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+        top: 25px;
+        left: 4px;
+    }
 `
 const NavToggleSpan = styled.span`
     display: block;
@@ -81,22 +105,7 @@ const NavToggleSpan = styled.span`
         -webkit-transform-origin: left center;
         transform-origin: left center;
     }
-    &.open span:nth-child(1){
-        -webkit-transform: rotate(45deg);
-        transform: rotate(45deg);
-        top: 3px;
-        left: 4px;
-    }
-    &.open span:nth-child(2){
-        width: 0;
-        opacity: 0;
-    }
-    &.open span:nth-child(3){
-        -webkit-transform: rotate(-45deg);
-        transform: rotate(-45deg);
-        top: 25px;
-        left: 4px;
-    }
+    
 `
 const NavLayer = styled.div`
     position: absolute;
@@ -105,18 +114,30 @@ const NavLayer = styled.div`
     z-index: -1;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 50%;
-    -webkit-transition: 1s;
-    transition: 1s;
+    -webkit-transition: 2s;
+    transition: 2s;
     -webkit-transform: scale3d(0, 0, 0);
     transform: scale3d(0, 0, 0);
     background: -webkit-linear-gradient(to left, #22472c, #71c2ff);
     background: linear-gradient(to left, #22472c, #71c2ff);
     &.open {
+        transition: 2s;
         -webkit-transform: scale3d(1, 1, 1);
         transform: scale3d(1, 1, 1);
+        width: ${props => props.resizeNav.diameter}px;
+        height:  ${props => props.resizeNav.diameter}px;
+        margin-top: -${props => props.resizeNav.radius}px;
+        margin-left: -${props => props.resizeNav.radius}px;
     }
-    
 `
+let radius = Math.sqrt(Math.pow(window.innerHeight, 2) + Math.pow(window.innerWidth, 2));
+const resizeNav = {
+    radius: radius,
+    diameter: radius * 2
+};
+NavLayer.defaultProps = {
+    resizeNav
+}
 
 const Menu = styled.div`
     width: 100%;
@@ -127,8 +148,8 @@ const Menu = styled.div`
     transition: ease-in-out 0.25s;
     -webkit-transition-delay: 0s;
     transition-delay: 0s;
-    visibility: hidden;
     opacity: 0;
+    visibility: hidden;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -143,6 +164,7 @@ const Menu = styled.div`
     ul {
         list-style: none;
     }
+    height: ${props => window.innerHeight}px;
     &.open {
         visibility: visible;
         opacity: 1;
@@ -154,5 +176,12 @@ const Menu = styled.div`
     }
     & li:hover{
         list-style: disc;
+    }
+    & li a:visited,
+    & li a:link {
+        color: #fff;
+    }
+    & li:hover a {
+        text-decoration: none;
     }
 `
