@@ -54,9 +54,6 @@ const NavbarBrand = styled.a`
         color: white;
         text-decoration: none;    
     }
-    img {
-        width: 100%;
-    }
 `
 
 const NavToggle = styled.a`

@@ -96,7 +96,7 @@ function IncludeMap (props) {
                     title={"myPoint"}
                     name={"Estou aqui"}
                     position={{lat: props.myLocation[0], lng: props.myLocation[1]}}
-                    icon={"http://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
+                    icon={"https://maps.google.com/mapfiles/ms/icons/blue-dot.png"}
                 />
 
                 {places.map(places => 

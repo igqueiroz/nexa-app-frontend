@@ -130,7 +130,9 @@ export default function Home (props) {
 				        <div className="container">
 				            <div className="row">
 				                <div className="container">
-				                	<div className="text-center"><img src={require("../images/achar-clinicas.png")} alt="Procura Clínicas" title="Procura Clínicas" /></div>
+				                	<div className="text-center">
+				                		<ImgLogo src={require("../images/achar-clinicas.png")} alt="Procura Clínicas" title="Procura Clínicas" />
+				                	</div>
 				            	</div>
 				            </div>
 				        	<div className="row">
@@ -308,6 +310,10 @@ const Map = styled.div`
     clear: both;
     margin-top: 30px;
     float: left;
+`
+
+const ImgLogo = styled.div`
+	width: 100%;
 `
 
 const Label = styled.label`
