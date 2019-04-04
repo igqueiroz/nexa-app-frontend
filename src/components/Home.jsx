@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import styled from "styled-components"
 import IncludeMap from "./IncludeMap"
 import { ValidationContext } from "../contexts/ValidationProvider"
@@ -21,6 +21,8 @@ export default function Home (props) {
 	const [fakeLoad, setFakeLoad] = useState(false)
 	const [nearByParam, setNearByParam] = useState(nearByParamInitial)
 	const [modalBox, setModalShow] = useState(modalBoxInitial)
+	const [mylocation, setMyLocation] = useState({})
+	const [geolocationEnable, setGeolocationEnable] = useState(false)
 	const {leadData, updateLeadData} = useContext(LeadDataContext)
 	const {validateField, fields} = useContext(ValidationContext)
 	
@@ -32,19 +34,19 @@ export default function Home (props) {
 	}
 	const changeLoadButton = (value) => setLoadButton(value)
 	const changeShowMap = (value) => setShowMap(value)
-	
+	const changeMyLocation = (value) => setMyLocation(value)
+
 	function handleChange(event)  {
 	    const {name, value} = event.target
 	    validateField({ name, value })	
 	}
 
 	function handleSubmit(event) {
-		changeLoadButton(true);
+		changeLoadButton(true)
 		// Valida todos os campos
 		if (Object.values(fields).filter(e => e.hasError === false).length === Object.values(fields).length) {
-			changeShowMap(true);
 			setTimeout(() => { changeLoadButton(false); }, 650);
-			// updateLeadData({ name, value })
+			enableGeoLocation()
 		} else {
 			let mensagem = [];
 			Object.values(fields).filter(e => mensagem.push(e.errorMessage))
@@ -66,12 +68,49 @@ export default function Home (props) {
 	}
 
 	function ErrorsList(props) {
-		const listItems = props.mensagem.map((mensagem, index) => {
+		const listItems = props.mensagem.map(( mensagem, index ) => {
 			if (mensagem) {
 				return <li key={index.toString()}> {mensagem} </li>	
 			}
 		})
 		return (<ul>{listItems}</ul>)
+	}
+	
+	function enableGeoLocation() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition( position => {
+				sendMyLocation(position)
+			})
+        }
+        else {
+            setModalShow({
+				show: true,
+				titulo: 'Hummmmm... ',
+				mensagem: ['Desculpe, você deve ativar o serviço de Geolocation do seu navegador para continuar.']
+			})
+        }
+	}
+
+	function sendMyLocation(position){
+		changeMyLocation({
+			mylocation: [position.coords.latitude, position.coords.longitude]
+		})
+		verifyGeoLocation()
+	}
+
+	function verifyGeoLocation() {
+		console.log(mylocation)
+		if (mylocation.mylocation) {
+			changeShowMap(true)
+			setGeolocationEnable(true)
+			// updateLeadData({ name, value })
+		} else {
+			setModalShow({
+				show: true,
+				titulo: 'Hummmmm... ',
+				mensagem: ['Para usar o serviço você deve aceitar o serviço de Geolocation do seu navegador.']
+			})
+		}
 	}
 
     return (
@@ -212,7 +251,7 @@ export default function Home (props) {
 						        </form>
 					        </div>
 				             {
-				             	showMap && <Map showMap={showMap} >
+				             	showMap && geolocationEnable && <Map showMap={showMap} >
 					           	<IncludeMap
 	                                // myLocation={this.state.myLocation}
 	                                // zoom={this.state.zoom}
