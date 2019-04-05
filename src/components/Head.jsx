@@ -1,5 +1,6 @@
-import React from 'react';
+import React from 'react'
 import {Helmet} from "react-helmet"
+import '../css/bootstrap.css'
 
 export default function Head(props) {
     return (
@@ -20,7 +21,7 @@ export default function Head(props) {
 			<meta name="twitter:title" content="Nexa Digital" /> 
 			<meta name="twitter:site" content="@nexadigital" /> 
 			<meta name="twitter:creator" content="@nexadigital" />
-			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.css" />
+			
         </Helmet>
     );
 }

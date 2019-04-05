@@ -20,6 +20,7 @@ export default function Header(props) {
                                     <li><a href="/">Home</a></li>
                                     <li><a href="/geolocation">Sobre Geolocalização</a></li>
                                     <li><a href="/about">Nexa Digital</a></li>
+                                    <li><a href="/users">Lista de Usuários</a></li>
                                 </ul>
                             </Menu>
                             <NavbarBrand href="/">Nexa Digital</NavbarBrand>

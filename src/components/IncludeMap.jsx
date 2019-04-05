@@ -5,6 +5,7 @@
 import React, { useState } from 'react'
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react'
 import SaveData from '../utils/save_data'
+import styled from "styled-components"
 
 function IncludeMap (props) {
 
@@ -125,7 +126,7 @@ function IncludeMap (props) {
                                     "&dropoff[longitude]=" +
                                     mapUpdate.currentMarkerLng
                                     }>
-                                    <img src={require("../images/uber.png")} alt="Vá de Uber até esse local" title="Vá de Uber até esse local"/></a>
+                                    <ImgUber src={require("../images/uber.png")} alt="Vá de Uber até esse local" title="Vá de Uber até esse local"/></a>
                                 </p>
                             </div>
                             }
@@ -137,8 +138,15 @@ function IncludeMap (props) {
         );
 
     }
+
+const ImgUber = styled.img`
+    width: 100%;
+    max-width: 150px !important;
+`
+
 export default GoogleApiWrapper({
     apiKey: "AIzaSyAmFYEUy9Kj2WhpImGyYHMb0t9efz3Vmbk",
     version: '3',
     language: 'portuguese'
 })(IncludeMap)
+
