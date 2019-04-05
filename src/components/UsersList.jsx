@@ -5,7 +5,7 @@ import loadData from '../utils/load_data'
 
 
 export default function UsersList (props) {
-	const [items, loading] = loadData("http://localhost:3001/userlist")
+	const [items, loading] = loadData("https://mongo-dot-nexa-digital.appspot.com/userlist")
 
 	return (
 		<div className="container mt-5">

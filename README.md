@@ -22,13 +22,13 @@ Stack usado na aplicação:
 ----
 #Endpoints
 * App
-    (https://nexa-digital.appspot.com)[https://nexa-digital.appspot.com]
+    https://nexa-digital.appspot.com
 
 * MongoDB API
-    (https://mongo-dot-nexa-digital.appspot.com/userlist)[https://mongo-dot-nexa-digital.appspot.com/userlist]
+    https://mongo-dot-nexa-digital.appspot.com/userlist
 
 * Mlab
-	(https://mlab.com)[https://mlab.com]
+	https://mlab.com
 
 ----
 #Jest Unit Tests
