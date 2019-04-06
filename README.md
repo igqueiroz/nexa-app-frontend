@@ -51,4 +51,17 @@ Stack usado na aplicação:
 
 ---
 ## CORS
-* Foi bloqueada requisições fora do escopo Banco > Front, se você for rodar o ambiente localmente, não será possível gravar as interações do usuário no banco da MLab em nuvem.
+* Foi bloqueada requisições fora do escopo Banco > Front, se você for rodar o ambiente local, não será possível gravar as interações do usuário no banco da MLab em nuvem.
+
+---
+## Configurando o ambiente de desenvolvimento
+1. Faça um Fork do repositório https://igqueiroz@bitbucket.org/igqueiroz/nexa-digital.git
+2. Instale o Google SDK https://cloud.google.com/sdk/ para seu Sistema Operaciona
+3. Configure sua conta
+4. Instale o NodeJs https://nodejs.org/en/download/
+5. Na pasta do repositório local rode o commando no seu terminal ``` npm install ``` e ``` npm run dev ``` ou ``` npm run dev:windows ``` para Windows
+6. Faça deploy na branch <development> e depois um pull request para a master seguindo o pipeline do BitBucket
+
+---
+## Ambientes Google App Engine Standard e Google App Engine Flex
+* Nas pastas <gaeflex> e <gaestd> tem 2 exemplos de configurações de rede para fazer o deploy no App Engine para ambos os sistemas, o padrão desse projeto é o Standard, o servidor é muito mais rápido de realizar deploy em nuvem e tem a capacidade de zerar instâncias quando não for utilizado. Sendo muito mais econômico e dinâmico que seu irmão Flex.
