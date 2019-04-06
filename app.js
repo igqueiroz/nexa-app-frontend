@@ -36,7 +36,6 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 // All other requests are handled by the index module
 app.get("*", (req, res) => {
-	res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
     res.sendFile(path.join(__dirname, 'build', 'index.html'))
 })
 
